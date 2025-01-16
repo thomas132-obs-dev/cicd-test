@@ -1,0 +1,46 @@
+name: CI/CD with AA Panel
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      # Step 3: Install dependencies and build the project
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      # Step 4: Deploy to the server
+      - name: Deploy to AA Panel server
+        env:
+          SSH_HOST: 122.248.250.57
+          SSH_USER: Admin
+          SSH_KEY: AAAAB3NzaC1yc2EAAAADAQABAAABAQC2Jj9cOTzcd0VLDOnqmnwQX6dXNx9Gc6J1ti8jxB7YmHvbNKasvYgy9MuYeSsJp7TzD8f1FUR9b1ZZ9hs/9Vz5enhDrm1cpjAC0Cqzz6WANyRzVtoHV3NDzgv26LLN41p0kXTMBhonfTA8hLPS1f15Mg9aTG++0nNk8iuk3Un/E6EMHny6gVxORlHKMKNkeLm1bGU0ojuDfDMJPZBjaicPmf+bfeVFrTs89ZZR3lrfcL0KCVdo5Vbgefwp/OeF/wzCc2rg+wkmTwZbDu3VS0sCTgNTOeK04TYQMQjrE7h1pZ+Ech5BvwrHnaBA5f7Voc3MC8daSWYGzQ24ZRDesUYh
+          DEPLOY_PATH: /www/wwwroot/cicd.origin.com.mm
+        run: |
+          echo "${SSH_KEY}" > deploy_key
+          chmod 600 deploy_key
+          rsync -avz -e "ssh -i deploy_key -o StrictHostKeyChecking=no" \
+            ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}
+          ssh -i deploy_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
+          cd ${DEPLOY_PATH}
+          # Restart your application (if applicable, e.g., PM2 or Node.js)
+          pm2 restart all || pm2 start npm --name "admin-panel" -- start
+# EOF
