@@ -27,7 +27,7 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      # Step 4: Deploy to the server
+      # Step 4: Deploy to the server1
       - name: Deploy to AA Panel server
         env:
           SSH_HOST: 122.248.250.57
