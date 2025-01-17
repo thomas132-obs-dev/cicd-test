@@ -43,4 +43,4 @@ jobs:
           cd ${DEPLOY_PATH}
           # Restart your application (if applicable, e.g., PM2 or Node.js)
           pm2 restart all || pm2 start npm --name "admin-panel" -- start
-EOF
+#EOF
