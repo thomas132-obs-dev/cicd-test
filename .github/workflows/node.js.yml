@@ -36,12 +36,13 @@ jobs:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           # Save SSH key to a temporary file and ensure correct formatting
-          echo -e "${SSH_KEY}" > cicdTestFirst
+          echo "${SSH_KEY}" | sed 's/\\n/\
+/g' > cicdTestFirst
           chmod 600 cicdTestFirst
           
           # Sync build files to the server
           rsync -avz -e "ssh -i cicdTestFirst -o StrictHostKeyChecking=no" \
-            ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH} || exit 1
+            ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}
           
           # Restart or start the application on the server
           ssh -i cicdTestFirst -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
