@@ -36,9 +36,9 @@ jobs:
 
           DEPLOY_PATH: /www/wwwroot/cicd.origin.com.mm
         run: |
-          echo "${SSH_KEY}" > ciceTestFirst
-          chmod 600 ciceTestFirst
-          rsync -avz -e "ssh -i ciceTestFirst -o StrictHostKeyChecking=no" \
+          echo "${SSH_KEY}" > cicdTestFirst
+          chmod 600 cicdTestFirst
+          rsync -avz -e "ssh -i cicdTestFirst -o StrictHostKeyChecking=no" \
             ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}
           ssh -i deploy_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
           cd ${DEPLOY_PATH}
