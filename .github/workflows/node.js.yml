@@ -12,7 +12,7 @@ jobs:
     steps:
       # Step 1: Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Step 2: Set up Node.js
       - name: Set up Node.js
@@ -33,15 +33,18 @@ jobs:
           SSH_HOST: ${{ secrets.SERVER_IP_APPDRESS }}
           SSH_USER: ${{ secrets.USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-          DEPLOY_PATH: /www/wwwroot/cicd.origin.com.mm
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
+          # Save SSH key to a temporary file and set permissions
           echo "${SSH_KEY}" > cicdTestFirst
           chmod 600 cicdTestFirst
+          
+          # Sync build files to the server
           rsync -avz -e "ssh -i cicdTestFirst -o StrictHostKeyChecking=no" \
             ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}
+          
+          # Restart or start the application on the server
           ssh -i cicdTestFirst -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
           cd ${DEPLOY_PATH}
-          # Restart your application (if applicable, e.g., PM2 or Node.js)
           pm2 restart all || pm2 start npm --name "admin-panel" -- start
           EOF
