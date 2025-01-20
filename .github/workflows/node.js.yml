@@ -36,8 +36,7 @@ jobs:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           # Save SSH key to a temporary file and ensure correct formatting
-          echo "${SSH_KEY}" | sed 's/\\n/\
-/g' > cicdTestFirst
+          echo "${SSH_KEY}" | sed $'s/\\\\n/\\n/g' > cicdTestFirst
           chmod 600 cicdTestFirst
           
           # Sync build files to the server
