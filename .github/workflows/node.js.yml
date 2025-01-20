@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
 
       # Step 3: Install dependencies and build the project
       - name: Install dependencies
@@ -35,13 +35,13 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          # Save SSH key to a temporary file and set permissions
-          echo "${SSH_KEY}" > cicdTestFirst
+          # Save SSH key to a temporary file and ensure correct formatting
+          echo -e "${SSH_KEY}" > cicdTestFirst
           chmod 600 cicdTestFirst
           
           # Sync build files to the server
           rsync -avz -e "ssh -i cicdTestFirst -o StrictHostKeyChecking=no" \
-            ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}
+            ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH} || exit 1
           
           # Restart or start the application on the server
           ssh -i cicdTestFirst -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
