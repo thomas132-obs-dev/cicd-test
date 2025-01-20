@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '14'
 
       # Step 3: Install dependencies and build the project
       - name: Install dependencies
@@ -46,5 +46,5 @@ jobs:
           # Restart or start the application on the server
           ssh -i cicdTestFirst -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
           cd ${DEPLOY_PATH}
-          pm2 restart all || pm2 start npm --name "admin-panel" -- start
+          pm2 restart all || pm2 start npm --name "build" -- start
           EOF
