@@ -32,7 +32,7 @@ jobs:
         env:
           SSH_HOST: 122.248.250.57
           SSH_USER: Admin
-          SSH_KEY: AAAAB3NzaC1yc2EAAAADAQABAAABAQC2Jj9cOTzcd0VLDOnqmnwQX6dXNx9Gc6J1ti8jxB7YmHvbNKasvYgy9MuYeSsJp7TzD8f1FUR9b1ZZ9hs/9Vz5enhDrm1cpjAC0Cqzz6WANyRzVtoHV3NDzgv26LLN41p0kXTMBhonfTA8hLPS1f15Mg9aTG++0nNk8iuk3Un/E6EMHny6gVxORlHKMKNkeLm1bGU0ojuDfDMJPZBjaicPmf+bfeVFrTs89ZZR3lrfcL0KCVdo5Vbgefwp/OeF/wzCc2rg+wkmTwZbDu3VS0sCTgNTOeK04TYQMQjrE7h1pZ+Ech5BvwrHnaBA5f7Voc3MC8daSWYGzQ24ZRDesUYh
+          SSH_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCx5+DvegPY81h1wcf6sgO25J+7zKv38yCb4sImOJesJlAs5gxYh/fg2KAsO8LYP7KOZwuHVDVWcp/5xKRNa3/RqjJEb2WtkPIoID6KeYmrK7jgM2Imn0xs0L5WCr7SyvDavX934KY+Usqv5DsXAuFhsMSSid02Pu5yWg/7jfgtCxtWYce4zfAJ2fz3wRX0Ip6/J6CaZ8ZGd14ojDE9tOS2NyOjTpCzYs2Uua7XUJEub3GkTjfnO+KE1LCAtYVcR+amJhJp2VrleILH9SlPdMolaVYN1TCov158efu1jOIjU3u4vksRed9eDZzabPOL8QZBUpME5+HhUTbEgsM2aKf8BoXwyEXDCy9lpc3zV0qenerYVLUEZ+ESptcoM4AyhdAMsfg/ujZeBGvQNusA27rvwWbS4MP/OsZC8Q+Fb8YaHcPJWP6XG+qJsbgr0/79LqbL18oTShwG+hJO5eCjKas4vS/djvN25zlHwMwZBPjyvAdk5S9wcOvewTB84ETUEEZK+j74IPHcj8vnhW1leAo7cs7LTGUfXW45FFQuv4BtWeRqZYInfFq8Xq8dii+7EkvZgcGT1wVpe8PpRXl2Jy9kLFivl9rjVvQcDYA8m0bEbo13Bcw7/Ju9ddp3n1HFfox5Qxno85abVShujuFyDOEXa66tiqoo7GtxECUNcpuJcw== thantlynnnaing@obs.com.mm
           DEPLOY_PATH: /www/wwwroot/cicd.origin.com.mm
         run: |
           echo "${SSH_KEY}" > deploy_key
