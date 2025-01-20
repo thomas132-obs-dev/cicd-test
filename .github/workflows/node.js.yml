@@ -40,7 +40,7 @@ jobs:
           chmod 600 cicdTestFirst
           rsync -avz -e "ssh -i cicdTestFirst -o StrictHostKeyChecking=no" \
             ./build/ ${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}
-          ssh -i deploy_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
+          ssh -i cicdTestFirst -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
           cd ${DEPLOY_PATH}
           # Restart your application (if applicable, e.g., PM2 or Node.js)
           pm2 restart all || pm2 start npm --name "admin-panel" -- start
